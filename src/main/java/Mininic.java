@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Mininic {
@@ -14,8 +16,7 @@ public class Mininic {
     public static void main(String[] args) {
         box("Hello! I'm Mininic", "Your wish is my command!");
 
-        String[] tasks = new String[100];
-        int size = 0;
+        List<Task> tasks = new ArrayList<>(100);
 
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextLine()) {
@@ -24,23 +25,43 @@ public class Mininic {
                 box("Bye... :'(");
                 sc.close();
                 break;
+
             } else if (input.equals("list")) {
-                if (size == 0) {
-                    box();
-                } else {
-                    String[] lines = new String[size];
-                    for (int i = 0; i < size; i++) {
-                        lines[i] = (i + 1) + ". " + tasks[i];
-                    }
-                    box(lines);
+                List<String> lines = new ArrayList<>();
+                for (int i = 0; i < tasks.size(); i++) {
+                    lines.add((i + 1) + ". " + tasks.get(i).toString());
                 }
+                box(lines.toArray(new String[0]));
+
+            } else if (input.startsWith("mark ")) {
+                try {
+                    int idx = Integer.parseInt(input.substring(5).trim()) - 1;
+                    Task t = tasks.get(idx);
+                    t.mark();
+                    box("One task down, many more to go...:",
+                        " " + t.toString());
+                } catch (Exception e) {
+                    box("The task number is invalid!");
+                }
+
+            } else if (input.startsWith("unmark ")) {
+                try {
+                    int idx = Integer.parseInt(input.substring(7).trim()) - 1;
+                    Task t = tasks.get(idx);
+                    t.unmark();
+                    box("Why did you even mark this task in the first place?:",
+                        " " + t.toString());
+                } catch (Exception e) {
+                    box("The task number is invalid!");
+                }
+
+            } else if (!input.isEmpty()){
+                Task newTask = new Task(input);
+                tasks.add(newTask);
+                box("Task added: " + newTask.toString());
+
             } else {
-                if (size < tasks.length) {
-                    tasks[size++] = input;
-                    box("Task added: " + input);
-                } else {
-                    box("I'm very full... Clear some tasks to add more!");
-                }
+                box("Input is empty........");
             }
         }
     }
