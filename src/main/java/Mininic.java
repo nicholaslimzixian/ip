@@ -55,10 +55,58 @@ public class Mininic {
                     box("The task number is invalid!");
                 }
 
+            } else if (input.startsWith("todo ")) {
+                String name = input.substring(5).trim();
+                if (name.isEmpty()) {
+                    box("Usage: todo <description>");
+                } else {
+                    Task t = new Todo(name);
+                    tasks.add(t);
+                    box("Added a new task:", " " + t.toString(), "There are " + tasks.size() + " tasks in total.");
+                }
+
+            } else if (input.startsWith("deadline ")) {
+                String taskBy = input.substring(9).trim();
+                int byIdx = taskBy.indexOf("/by");
+                if (byIdx < 0) {
+                    box("Usage: deadline <description> /by <time>");
+                    continue;
+                }
+                String name = taskBy.substring(0, byIdx).trim();
+                String by = taskBy.substring(byIdx + 3).trim();
+                if (name.isEmpty() || by.isEmpty()) {
+                    box("Usage: deadline <description> /by <time>");
+                } else {
+                    Task t = new Deadline(name, by);
+                    tasks.add(t);
+                    box("Added a new task:", " " + t.toString(), "There are " + tasks.size() + " tasks in total.");
+                }
+
+            } else if (input.startsWith("event ")) {
+                String taskFromTo = input.substring(6).trim();
+                int fromIdx = taskFromTo.indexOf("/from");
+                int toIdx = taskFromTo.indexOf("/to");
+                if (toIdx < fromIdx || fromIdx < 0 || toIdx < 0) {
+                    box("Usage: event <description> /from <time> /to <time>");
+                    continue;
+                }
+                String name = taskFromTo.substring(0, fromIdx).trim();
+                String from = taskFromTo.substring(fromIdx + 5, toIdx).trim();
+                String to = taskFromTo.substring(toIdx + 4);
+                if (name.isEmpty() || from.isEmpty() || to.isEmpty()) {
+                    box("Usage: event <description> /from <time> /to <time>");
+                } else {
+                    Task t = new Event(name, from, to);
+                    tasks.add(t);
+                    box("Added a new task:", " " + t.toString(), "There are " + tasks.size() + " tasks in total.");
+                }
+                
             } else if (!input.isEmpty()){
-                Task newTask = new Task(input);
-                tasks.add(newTask);
-                box("Task added: " + newTask.toString());
+                box("Choose a type of task/enter a valid command!. Try:",
+                    " 1. todo <desc>",
+                    " 2. deadline <desc> /by <time>",
+                    " 3. event <desc> /from <start> /to <end>",
+                    " 4. list, mark N, unmark N, bye");
 
             } else {
                 box("Input is empty........");
