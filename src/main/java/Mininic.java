@@ -55,20 +55,20 @@ public class Mininic {
                     box("The task number is invalid!");
                 }
 
-            } else if (input.startsWith("todo ")) {
-                String name = input.substring(5).trim();
+            } else if (input.startsWith("todo")) {
+                String name = input.substring(4).trim();
                 if (name.isEmpty()) {
                     box("Usage: todo <description>");
                 } else {
-                    Task t = new Todo(name);
+                    Task t = new Todo(name.substring(0));
                     tasks.add(t);
                     box("Added a new task:", " " + t.toString(), "There are " + tasks.size() + " tasks in total.");
                 }
 
-            } else if (input.startsWith("deadline ")) {
-                String taskBy = input.substring(9).trim();
+            } else if (input.startsWith("deadline")) {
+                String taskBy = input.substring(8).trim();
                 int byIdx = taskBy.indexOf("/by");
-                if (byIdx < 0) {
+                if (byIdx < 0 || taskBy.isEmpty()) {
                     box("Usage: deadline <description> /by <time>");
                     continue;
                 }
@@ -82,11 +82,11 @@ public class Mininic {
                     box("Added a new task:", " " + t.toString(), "There are " + tasks.size() + " tasks in total.");
                 }
 
-            } else if (input.startsWith("event ")) {
-                String taskFromTo = input.substring(6).trim();
+            } else if (input.startsWith("event")) {
+                String taskFromTo = input.substring(5).trim();
                 int fromIdx = taskFromTo.indexOf("/from");
                 int toIdx = taskFromTo.indexOf("/to");
-                if (toIdx < fromIdx || fromIdx < 0 || toIdx < 0) {
+                if (toIdx < fromIdx || fromIdx < 0 || toIdx < 0 || taskFromTo.isEmpty()) {
                     box("Usage: event <description> /from <time> /to <time>");
                     continue;
                 }
@@ -100,7 +100,7 @@ public class Mininic {
                     tasks.add(t);
                     box("Added a new task:", " " + t.toString(), "There are " + tasks.size() + " tasks in total.");
                 }
-                
+
             } else if (!input.isEmpty()){
                 box("Choose a type of task/enter a valid command!. Try:",
                     " 1. todo <desc>",

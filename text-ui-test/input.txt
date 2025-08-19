@@ -1,0 +1,21 @@
+ 
+blargh
+list
+todo read book
+deadline return book /by Sunday
+event project meeting /from Mon 2pm /to 4pm
+list
+mark 2
+unmark 2
+todo
+deadline /by Sunday
+deadline report by Sunday
+deadline     /by     
+event party /to 10am
+event standup /to 3pm /from 2pm
+mark 0
+mark -1
+mark x
+mark 100
+unmark 999
+bye
