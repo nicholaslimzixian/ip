@@ -1,12 +1,27 @@
+import java.util.Scanner;
+
 public class Mininic {
     private static final String LINE = "____________________________________________________________";
 
+    private static void box(String... lines) {
+        System.out.println(LINE);
+        for (String line : lines) {
+            System.out.println(line);
+        }
+        System.out.println(LINE + "\n");
+    }
+
     public static void main(String[] args) {
-        System.out.println(LINE);
-        System.out.println("Hi! I'm Mininic");
-        System.out.println("Your wish is my command!");
-        System.out.println(LINE);
-        System.out.println("Bye :'(");
-        System.out.println(LINE);
+        box("Hello! I'm Mininic", "Your wish is my command!");
+
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNextLine()) {
+            String input = sc.nextLine();
+            if ("bye".equals(input.trim())) {
+                box("Bye... :'(");
+                break;
+            }
+            box(input);
+        }
     }
 }
