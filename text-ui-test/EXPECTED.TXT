@@ -13,8 +13,9 @@ Enter a valid command!. Try:
 2. deadline <desc> /by <time>
 3. event <desc> /from <start> /to <end>
 4. list
-5. mark N, unmark N
-6. bye
+5. mark <N>, unmark <N>
+6. delete <N>
+7. bye
 ____________________________________________________________
 
 ____________________________________________________________
