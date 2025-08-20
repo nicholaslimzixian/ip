@@ -18,4 +18,6 @@ mark -1
 mark x
 mark 100
 unmark 999
+delete 2
+list
 bye

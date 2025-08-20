@@ -119,6 +119,13 @@ public class Mininic {
                             " " + t.toString(),
                             "There are " + tasks.size() + " tasks in total.");
 
+                } else if (input.startsWith("delete")) {
+                    int idx = parseIndex(input.substring(6), tasks.size());
+                    Task removed = tasks.remove(idx);
+                    box("This task has been removed:",
+                        " " + removed.toString(),
+                        "There are " + tasks.size() + " tasks in total.");
+
                 } else if (!input.isEmpty()){
                     throw new UnknownCommandException(
                             """
