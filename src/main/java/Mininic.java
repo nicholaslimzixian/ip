@@ -13,6 +13,31 @@ public class Mininic {
         System.out.println(LINE + "\n");
     }
 
+    private static int parseIndex(String input, int size) {
+        String message = "The task number is invalid!";
+        try {
+            int n = Integer.parseInt(input.trim());
+            if (n <= 0) {
+                throw new InvalidCommandException(message);
+            }
+            int idx = n - 1;
+            if (idx >= size) {
+                throw new InvalidCommandException(message);
+            }
+            return idx;
+        } catch (NumberFormatException e) {
+            throw new InvalidCommandException(message);
+        }
+        
+    }
+
+    private static String requireNonEmpty(String s, String message) {
+        if (s == null || s.trim().isEmpty()) {
+            throw new EmptyDescriptionException(message);
+        }
+        return s.trim();
+    }
+
     public static void main(String[] args) {
         box("Hello! I'm Mininic", "Your wish is my command!");
 
@@ -21,95 +46,95 @@ public class Mininic {
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextLine()) {
             String input = sc.nextLine().trim();
-            if (input.equals("bye")) {
+
+            try {
+                if (input.equals("bye")) {
                 box("Bye... :'(");
                 sc.close();
                 break;
 
-            } else if (input.equals("list")) {
-                List<String> lines = new ArrayList<>();
-                for (int i = 0; i < tasks.size(); i++) {
-                    lines.add((i + 1) + ". " + tasks.get(i).toString());
-                }
-                box(lines.toArray(new String[0]));
+                } else if (input.equals("list")) {
+                    List<String> lines = new ArrayList<>();
+                    for (int i = 0; i < tasks.size(); i++) {
+                        lines.add((i + 1) + ". " + tasks.get(i).toString());
+                    }
+                    box(lines.toArray(new String[0]));
 
-            } else if (input.startsWith("mark ")) {
-                try {
-                    int idx = Integer.parseInt(input.substring(5).trim()) - 1;
-                    Task t = tasks.get(idx);
-                    t.mark();
-                    box("One task down, many more to go...:",
-                        " " + t.toString());
-                } catch (Exception e) {
-                    box("The task number is invalid!");
-                }
+                } else if (input.startsWith("mark")) {
+                    int idx = parseIndex(input.substring(4), tasks.size());
+                        Task t = tasks.get(idx);
+                        t.mark();
+                        box("One task down, many more to go...:",
+                            " " + t.toString());
 
-            } else if (input.startsWith("unmark ")) {
-                try {
-                    int idx = Integer.parseInt(input.substring(7).trim()) - 1;
-                    Task t = tasks.get(idx);
-                    t.unmark();
-                    box("Why did you even mark this task in the first place?:",
-                        " " + t.toString());
-                } catch (Exception e) {
-                    box("The task number is invalid!");
-                }
+                } else if (input.startsWith("unmark")) {
+                    int idx = parseIndex(input.substring(6), tasks.size());
+                        Task t = tasks.get(idx);
+                        t.unmark();
+                        box("Why did you even mark this task in the first place?:",
+                            " " + t.toString());
 
-            } else if (input.startsWith("todo")) {
-                String name = input.substring(4).trim();
-                if (name.isEmpty()) {
-                    box("Usage: todo <description>");
-                } else {
-                    Task t = new Todo(name.substring(0));
-                    tasks.add(t);
-                    box("Added a new task:", " " + t.toString(), "There are " + tasks.size() + " tasks in total.");
-                }
+                } else if (input.startsWith("todo")) {
+                    String name = input.substring(4).trim();
+                        name = requireNonEmpty(name, "Usage: todo <description>");
+                        Task t = new Todo(name);
+                        tasks.add(t);
+                        box("Added a new task:",
+                            " " + t.toString(),
+                            "There are " + tasks.size() + " tasks in total.");
 
-            } else if (input.startsWith("deadline")) {
-                String taskBy = input.substring(8).trim();
-                int byIdx = taskBy.indexOf("/by");
-                if (byIdx < 0 || taskBy.isEmpty()) {
-                    box("Usage: deadline <description> /by <time>");
-                    continue;
-                }
-                String name = taskBy.substring(0, byIdx).trim();
-                String by = taskBy.substring(byIdx + 3).trim();
-                if (name.isEmpty() || by.isEmpty()) {
-                    box("Usage: deadline <description> /by <time>");
-                } else {
+                } else if (input.startsWith("deadline")) {
+                    String taskBy = input.substring(8).trim();
+                    if (taskBy.isEmpty()) {
+                        throw new InvalidCommandException("Usage: deadline <description> /by <time>");
+                    }
+                    int byIdx = taskBy.indexOf("/by");
+                    if (byIdx < 0) {
+                        throw new InvalidCommandException("Usage: deadline <description> /by <time>");
+                    }
+                    String name = requireNonEmpty(taskBy.substring(0, byIdx), "Usage: deadline <description> /by <time>");
+                    String by = requireNonEmpty(taskBy.substring(byIdx + 3), "Usage: deadline <description> /by <time>");
                     Task t = new Deadline(name, by);
                     tasks.add(t);
-                    box("Added a new task:", " " + t.toString(), "There are " + tasks.size() + " tasks in total.");
-                }
+                    box("Added a new task:",
+                            " " + t.toString(),
+                            "There are " + tasks.size() + " tasks in total.");
 
-            } else if (input.startsWith("event")) {
-                String taskFromTo = input.substring(5).trim();
-                int fromIdx = taskFromTo.indexOf("/from");
-                int toIdx = taskFromTo.indexOf("/to");
-                if (toIdx < fromIdx || fromIdx < 0 || toIdx < 0 || taskFromTo.isEmpty()) {
-                    box("Usage: event <description> /from <time> /to <time>");
-                    continue;
-                }
-                String name = taskFromTo.substring(0, fromIdx).trim();
-                String from = taskFromTo.substring(fromIdx + 5, toIdx).trim();
-                String to = taskFromTo.substring(toIdx + 4);
-                if (name.isEmpty() || from.isEmpty() || to.isEmpty()) {
-                    box("Usage: event <description> /from <time> /to <time>");
+                } else if (input.startsWith("event")) {
+                    String taskFromTo = input.substring(5).trim();
+                        if (taskFromTo.isEmpty()) {
+                            throw new InvalidCommandException("Usage: event <description> /from <time> /to <time>");
+                        }
+                        int fromIdx = taskFromTo.indexOf("/from");
+                        int toIdx   = taskFromTo.indexOf("/to");
+                        if (fromIdx < 0 || toIdx < 0 || toIdx < fromIdx) {
+                            throw new InvalidCommandException("Usage: event <description> /from <time> /to <time>");
+                        }
+                        String name = requireNonEmpty(taskFromTo.substring(0, fromIdx), "Usage: event <description> /from <time> /to <time>");
+                        String from = requireNonEmpty(taskFromTo.substring(fromIdx + 5, toIdx), "Usage: event <description> /from <time> /to <time>");
+                        String to   = requireNonEmpty(taskFromTo.substring(toIdx + 4), "Usage: event <description> /from <time> /to <time>");
+                        Task t = new Event(name, from, to);
+                        tasks.add(t);
+                        box("Added a new task:",
+                            " " + t.toString(),
+                            "There are " + tasks.size() + " tasks in total.");
+
+                } else if (!input.isEmpty()){
+                    throw new UnknownCommandException(
+                            """
+                            Enter a valid command!. Try:
+                            1. todo <desc>
+                            2. deadline <desc> /by <time>
+                            3. event <desc> /from <start> /to <end>
+                            4. list
+                            5. mark N, unmark N
+                            6. bye""");
+
                 } else {
-                    Task t = new Event(name, from, to);
-                    tasks.add(t);
-                    box("Added a new task:", " " + t.toString(), "There are " + tasks.size() + " tasks in total.");
+                    throw new InvalidCommandException("Input is empty........");
                 }
-
-            } else if (!input.isEmpty()){
-                box("Choose a type of task/enter a valid command!. Try:",
-                    " 1. todo <desc>",
-                    " 2. deadline <desc> /by <time>",
-                    " 3. event <desc> /from <start> /to <end>",
-                    " 4. list, mark N, unmark N, bye");
-
-            } else {
-                box("Input is empty........");
+            } catch (EmptyDescriptionException | InvalidCommandException | UnknownCommandException e) {
+                box(e.getMessage());
             }
         }
     }

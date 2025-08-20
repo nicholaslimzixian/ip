@@ -8,11 +8,13 @@ Input is empty........
 ____________________________________________________________
 
 ____________________________________________________________
-Choose a type of task/enter a valid command!. Try:
- 1. todo <desc>
- 2. deadline <desc> /by <time>
- 3. event <desc> /from <start> /to <end>
- 4. list, mark N, unmark N, bye
+Enter a valid command!. Try:
+1. todo <desc>
+2. deadline <desc> /by <time>
+3. event <desc> /from <start> /to <end>
+4. list
+5. mark N, unmark N
+6. bye
 ____________________________________________________________
 
 ____________________________________________________________
