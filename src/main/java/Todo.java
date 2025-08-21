@@ -3,6 +3,10 @@ public class Todo extends Task {
         super(name);
     }
 
+    @Override public String toStorageString() {
+        return "T | " + (isDone ? "1" : "0") + " | " + name;
+    }
+
     @Override
     public String toString() {
         return "[T]" + super.toString();

@@ -41,7 +41,9 @@ public class Mininic {
     public static void main(String[] args) {
         box("Hello! I'm Mininic", "Your wish is my command!");
 
-        List<Task> tasks = new ArrayList<>(100);
+        Storage storage = new Storage("data/tasks.txt");
+
+        List<Task> tasks = storage.load();
 
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextLine()) {
@@ -73,6 +75,7 @@ public class Mininic {
                         int idx = parseIndex(input.substring(4), tasks.size());
                         Task t = tasks.get(idx);
                         t.mark();
+                        storage.save(tasks);
                         box("One task down, many more to go...:", " " + t.toString());
                         break;
                     }
@@ -81,6 +84,7 @@ public class Mininic {
                         int idx = parseIndex(input.substring(6), tasks.size());
                         Task t = tasks.get(idx);
                         t.unmark();
+                        storage.save(tasks);
                         box("Why did you even mark this task in the first place?:",
                             " " + t.toString());
                         break;
@@ -90,6 +94,7 @@ public class Mininic {
                         String name = requireNonEmpty(arg, "Usage: todo <description>");
                         Task t = new Todo(name);
                         tasks.add(t);
+                        storage.save(tasks);
                         box("Added a new task:",
                             " " + t.toString(),
                             "There are " + tasks.size() + " tasks in total.");
@@ -106,6 +111,7 @@ public class Mininic {
                         String by = requireNonEmpty(taskBy.substring(byIdx + 3), "Usage: deadline <description> /by <time>");
                         Task t = new Deadline(name, by);
                         tasks.add(t);
+                        storage.save(tasks);
                         box("Added a new task:",
                             " " + t.toString(),
                             "There are " + tasks.size() + " tasks in total.");
@@ -124,6 +130,7 @@ public class Mininic {
                         String to   = requireNonEmpty(taskFromTo.substring(toIdx + 4), "Usage: event <description> /from <time> /to <time>");
                         Task t = new Event(name, from, to);
                         tasks.add(t);
+                        storage.save(tasks);
                         box("Added a new task:",
                             " " + t.toString(),
                             "There are " + tasks.size() + " tasks in total.");
@@ -133,6 +140,7 @@ public class Mininic {
                     case DELETE: {
                         int idx = parseIndex(input.substring(6), tasks.size());
                         Task removed = tasks.remove(idx);
+                        storage.save(tasks);
                         box("This task has been removed:",
                             " " + removed.toString(),
                             "There are " + tasks.size() + " tasks in total.");
@@ -159,6 +167,8 @@ public class Mininic {
                 } 
             } catch (EmptyDescriptionException | InvalidCommandException | UnknownCommandException e) {
                 box(e.getMessage());
+            } catch (java.io.IOException e) {
+                box("Please try again. An error occurred while saving: " + e.getMessage());
             }
         }
     }

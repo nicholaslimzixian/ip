@@ -6,6 +6,10 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    @Override public String toStorageString() {
+        return "D | " + (isDone ? "1" : "0") + " | " + name + " | " + by;
+    }
+
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by + ")";

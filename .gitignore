@@ -5,6 +5,7 @@
 *.class
 *.log
 .settings/
+/data/
 
 # Gradle build files
 /.gradle/
@@ -18,3 +19,6 @@ bin/
 
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
+
+# VS Code
+/.vscode/
