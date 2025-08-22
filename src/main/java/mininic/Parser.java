@@ -1,3 +1,5 @@
+package mininic;
+
 public class Parser {
     public static class ParsedCommand {
         public final CommandType type;

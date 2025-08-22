@@ -1,3 +1,5 @@
+package mininic;
+
 public class UnknownCommandException extends RuntimeException {
     public UnknownCommandException(String message) {
         super(message);
