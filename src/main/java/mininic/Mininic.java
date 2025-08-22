@@ -1,3 +1,5 @@
+package mininic;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -5,6 +7,17 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Mininic {
+
+    private final Ui ui;
+    private final Storage storage;
+    private final TaskList taskList;
+
+    public Mininic(String filePath) {
+        this.ui = new Ui();
+        this.storage = new Storage(filePath);
+        this.taskList = new TaskList(storage.load(), storage);
+    }
+
     private static int parseIndex(String input, int size) {
         String message = "The task number is invalid!";
         try {
@@ -30,12 +43,8 @@ public class Mininic {
         return s.trim();
     }
 
-    public static void main(String[] args) {
-        Ui ui = new Ui();
+    public void run() {
         ui.welcomeMessage();
-
-        Storage storage = new Storage("data/tasks.txt");
-        TaskList taskList = new TaskList(storage.load(), storage);
 
         Scanner sc = new Scanner(System.in);
         while (sc.hasNextLine()) {
@@ -151,4 +160,9 @@ public class Mininic {
             }
         }
     }
+    public static void main(String[] args) {
+        new Mininic("data/tasks.txt").run();
+    }
 }
+
+    

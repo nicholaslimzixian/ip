@@ -1,3 +1,5 @@
+package mininic;
+
 import java.util.List;
 
 public class Ui {
