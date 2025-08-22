@@ -1,23 +1,16 @@
- 
-blargh
-list
-todo read book
-deadline return book /by Sunday
-event project meeting /from Mon 2pm /to 4pm
+todo skrrr
+deadline project /by 2019-12-02
+event skiyaaa /from 2019-12-02 1400 /to 2019-12-02 1600
+event plsplspls /from 2019-12-02 /to 2019-12-06
 list
 mark 2
 unmark 2
-todo
-deadline /by Sunday
-deadline report by Sunday
-deadline     /by     
-event party /to 10am
-event standup /to 3pm /from 2pm
-mark 0
-mark -1
-mark x
-mark 100
-unmark 999
-delete 2
+delete 1
 list
+deadline something /by 2019/12/02
+deadline /by 2019-12-02
+event party /from 2019-12-02 09zz /to 2019-12-02 1000
+event wrong /to 2019-12-02 1000 /from 2019-12-02 0900
+event nope /from 2019-12-02 /to
+mark 0
 bye

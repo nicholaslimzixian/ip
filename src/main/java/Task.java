@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public abstract class Task {
     protected final String name;
     protected boolean isDone;
@@ -42,7 +45,8 @@ public abstract class Task {
             }
             case "D": {
                 String by = parts[3];
-                Deadline d = new Deadline(desc, by);
+                Deadline d;
+                d = new Deadline(desc, LocalDate.parse(by));
                 if (done) {
                     d.mark();
                 }
@@ -51,7 +55,16 @@ public abstract class Task {
             case "E": {
                 String from = parts[3];
                 String to = parts[4];
-                Event e = new Event(desc, from, to);
+                Event e;
+                try {
+                    LocalDateTime fromDt = LocalDateTime.parse(from);
+                    LocalDateTime toDt = LocalDateTime.parse(to);
+                    e = new Event(desc, fromDt, toDt);
+                } catch (Exception dtFailure) {
+                    LocalDate fromD = LocalDate.parse(from);
+                    LocalDate toD = LocalDate.parse(to);
+                    e = new Event(desc, fromD, toD);
+                }
                 if (done) {
                     e.mark();
                 }
