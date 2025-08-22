@@ -65,7 +65,7 @@ Usage: deadline <description> /by yyyy-mm-dd
 ____________________________________________________________
 
 ____________________________________________________________
-Please enter the date in the format of yyyy-mm-dd or yyyy-m-dd HHmm
+Please enter the date in the format of yyyy-mm-dd or yyyy-mm-dd HHmm
 ____________________________________________________________
 
 ____________________________________________________________
