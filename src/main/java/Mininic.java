@@ -1,3 +1,7 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -102,14 +106,21 @@ public class Mininic {
                     }
 
                     case DEADLINE: {
-                        String taskBy = requireNonEmpty(arg, "Usage: deadline <description> /by <time>");
+                        String taskBy = requireNonEmpty(arg, "Usage: deadline <description> /by yyyy-mm-dd");
                         int byIdx = taskBy.indexOf("/by");
                         if (byIdx < 0) {
-                            throw new InvalidCommandException("Usage: deadline <description> /by <time>");
+                            throw new InvalidCommandException("Usage: deadline <description> /by yyyy-mm-dd");
                         }
-                        String name = requireNonEmpty(taskBy.substring(0, byIdx), "Usage: deadline <description> /by <time>");
-                        String by = requireNonEmpty(taskBy.substring(byIdx + 3), "Usage: deadline <description> /by <time>");
-                        Task t = new Deadline(name, by);
+                        String name = requireNonEmpty(taskBy.substring(0, byIdx), "Usage: deadline <description> /by yyyy-mm-dd");
+                        String by = requireNonEmpty(taskBy.substring(byIdx + 3), "Usage: deadline <description> /by yyyy-mm-dd");
+
+                        LocalDate byDate;
+                        try {
+                            byDate = LocalDate.parse(by);
+                        } catch (DateTimeParseException e) {
+                            throw new InvalidCommandException("Please enter the date in the format of yyyy-mm-dd");
+                        }
+                        Task t = new Deadline(name, byDate);
                         tasks.add(t);
                         storage.save(tasks);
                         box("Added a new task:",
@@ -119,16 +130,34 @@ public class Mininic {
                     }
 
                     case EVENT: {
-                        String taskFromTo = requireNonEmpty(arg, "Usage: event <description> /from <time> /to <time>");
+                        String taskFromTo = requireNonEmpty(arg, "Usage: event <description> /from yyyy-mm-dd HHmm /to yyyy-mm-dd HHmm");
                         int fromIdx = taskFromTo.indexOf("/from");
                         int toIdx   = taskFromTo.indexOf("/to");
                         if (fromIdx < 0 || toIdx < 0 || toIdx < fromIdx) {
-                            throw new InvalidCommandException("Usage: event <description> /from <time> /to <time>");
+                            throw new InvalidCommandException("Usage: event <description> /from yyyy-mm-dd HHmm /to yyyy-mm-dd HHmm");
                         }
-                        String name = requireNonEmpty(taskFromTo.substring(0, fromIdx), "Usage: event <description> /from <time> /to <time>");
-                        String from = requireNonEmpty(taskFromTo.substring(fromIdx + 5, toIdx), "Usage: event <description> /from <time> /to <time>");
-                        String to   = requireNonEmpty(taskFromTo.substring(toIdx + 4), "Usage: event <description> /from <time> /to <time>");
-                        Task t = new Event(name, from, to);
+                        String name = requireNonEmpty(taskFromTo.substring(0, fromIdx), "Usage: event <description> /from yyyy-mm-dd HHmm /to yyyy-mm-dd HHmm");
+                        String from = requireNonEmpty(taskFromTo.substring(fromIdx + 5, toIdx), "Usage: event <description> /from yyyy-mm-dd HHmm /to yyyy-mm-dd HHmm");
+                        String to = requireNonEmpty(taskFromTo.substring(toIdx + 3), "Usage: event <description> /from yyyy-mm-dd HHmm /to yyyy-mm-dd HHmm");
+
+                        Task t;
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+                        try {
+                            LocalDateTime fromDt = LocalDateTime.parse(from, dtf);
+                            LocalDateTime toDt = LocalDateTime.parse(to, dtf);
+                            t = new Event(name, fromDt, toDt);
+                        } catch (DateTimeParseException dtFailure) {
+                            try {
+                                LocalDate fromD = LocalDate.parse(from);
+                                LocalDate toD = LocalDate.parse(to);
+                                t = new Event(name, fromD, toD);
+                            } catch (Exception e) {
+                                throw new InvalidCommandException("Please enter the date in the format of yyyy-mm-dd or yyyy-m-dd HHmm");
+                            }
+                        }
+
+
                         tasks.add(t);
                         storage.save(tasks);
                         box("Added a new task:",
