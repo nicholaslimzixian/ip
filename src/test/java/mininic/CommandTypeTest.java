@@ -6,42 +6,42 @@ import org.junit.jupiter.api.Test;
 public class CommandTypeTest {
 
     @Test
-    void of_todo_isTODO() {
+    void isTodo() {
         assertEquals(CommandType.TODO, CommandType.of("todo"));
     }
 
     @Test
-    void of_mark_isMARK() {
+    void isMark() {
         assertEquals(CommandType.MARK, CommandType.of("mark"));
     }
 
     @Test
-    void of_unmark_isUNMARK() {
+    void isUnmark() {
         assertEquals(CommandType.UNMARK, CommandType.of("unmark"));
     }
 
     @Test
-    void of_delete_isDELETE() {
+    void isDelete() {
         assertEquals(CommandType.DELETE, CommandType.of("delete"));
     }
 
     @Test
-    void of_list_isLIST() {
+    void isList() {
         assertEquals(CommandType.LIST, CommandType.of("list"));
     }
 
     @Test
-    void of_bye_isBYE() {
+    void isBye() {
         assertEquals(CommandType.BYE, CommandType.of("bye"));
     }
 
     @Test
-    void of_whitespace_isUNKNOWN() {
+    void isBlankUnknown() {
         assertEquals(CommandType.UNKNOWN, CommandType.of("   "));
     }
 
     @Test
-    void of_unknown_isUNKNOWN() {
+    void isUnknownUnknown() {
         assertEquals(CommandType.UNKNOWN, CommandType.of("SKIYAAAAA"));
     }
 }

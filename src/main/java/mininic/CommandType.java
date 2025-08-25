@@ -1,7 +1,7 @@
 package mininic;
 
 public enum CommandType {
-    BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, UNKNOWN;
+    BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, UNKNOWN;
 
     public static CommandType of(String input) {
         switch (input) {
@@ -13,6 +13,7 @@ public enum CommandType {
             case "deadline": return DEADLINE;
             case "event": return EVENT;
             case "delete": return DELETE;
+            case "find": return FIND;
             default: return UNKNOWN;
         }
     }

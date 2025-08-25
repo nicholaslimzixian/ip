@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class EventTest {
 
     @Test
-    void of_event_toString_containsFromAndTo() {
+    void eventFromTo() {
         Event e = new Event(
                 "project meeting",
                 LocalDateTime.parse("2019-12-02T14:00"),

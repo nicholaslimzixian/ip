@@ -145,6 +145,25 @@ public class Mininic {
                         break;
                     }
 
+                case FIND: {
+                    String usage = "Usage: find <keyword>";
+                    if (arg == null || arg.trim().isEmpty()) {
+                        throw new EmptyDescriptionException(usage);
+                    }
+
+                    var hits = taskList.find(arg.trim());
+                    if (hits.isEmpty()) {
+                        ui.showError("No matching tasks found.");
+                    } else {
+                        java.util.List<String> lines = new java.util.ArrayList<>();
+                        for (int i = 0; i < hits.size(); i++) {
+                            lines.add((i + 1) + ". " + hits.get(i).toString());
+                        }
+                        ui.showTaskList(lines);
+                    }
+                    break;
+                }
+
                     case UNKNOWN: {
                         if (!input.trim().isEmpty() && input != null) {
                             ui.showUnknownCommand();

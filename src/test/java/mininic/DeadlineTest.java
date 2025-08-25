@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class DeadlineTest {
 
     @Test
-    void of_deadline_toString_containsPrettyDate() {
+    void deadlineDate() {
         Deadline d = new Deadline("return book", LocalDate.parse("2019-12-02"));
         String s = d.toString();
         assertTrue(s.startsWith("[D][ ] return book"), "prefix wrong: " + s);
