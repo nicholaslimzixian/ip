@@ -31,49 +31,51 @@ public abstract class Task {
             return null;
         }
         String[] parts = s.split(" \\| ", -1);
-        if (parts.length < 3) return null;
+        if (parts.length < 3) {
+            return null;
+        }
 
         String type = parts[0];
         boolean done = "1".equals(parts[1]);
         String desc = parts[2];
 
         switch (type) {
-            case "T": {
-                Todo t = new Todo(desc);
-                if (done) {
-                    t.mark();
-                }
-                return t;
+        case "T": {
+            Todo t = new Todo(desc);
+            if (done) {
+                t.mark();
             }
-            case "D": {
-                String by = parts[3];
-                Deadline d;
-                d = new Deadline(desc, LocalDate.parse(by));
-                if (done) {
-                    d.mark();
-                }
-                return d;
+            return t;
+        }
+        case "D": {
+            String by = parts[3];
+            Deadline d;
+            d = new Deadline(desc, LocalDate.parse(by));
+            if (done) {
+                d.mark();
             }
-            case "E": {
-                String from = parts[3];
-                String to = parts[4];
-                Event e;
-                try {
-                    LocalDateTime fromDt = LocalDateTime.parse(from);
-                    LocalDateTime toDt = LocalDateTime.parse(to);
-                    e = new Event(desc, fromDt, toDt);
-                } catch (Exception dtFailure) {
-                    LocalDate fromD = LocalDate.parse(from);
-                    LocalDate toD = LocalDate.parse(to);
-                    e = new Event(desc, fromD, toD);
-                }
-                if (done) {
-                    e.mark();
-                }
-                return e;
+            return d;
+        }
+        case "E": {
+            String from = parts[3];
+            String to = parts[4];
+            Event e;
+            try {
+                LocalDateTime fromDt = LocalDateTime.parse(from);
+                LocalDateTime toDt = LocalDateTime.parse(to);
+                e = new Event(desc, fromDt, toDt);
+            } catch (Exception dtFailure) {
+                LocalDate fromD = LocalDate.parse(from);
+                LocalDate toD = LocalDate.parse(to);
+                e = new Event(desc, fromD, toD);
             }
-            default:
-                return null;
+            if (done) {
+                e.mark();
+            }
+            return e;
+        }
+        default:
+            return null;
         }
     }
     @Override

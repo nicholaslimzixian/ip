@@ -36,6 +36,7 @@ public class Storage {
                 }
             }
         } catch (IOException ignored) {
+            //ignore read errors and return an empty list
         }
         return tasks;
     }
