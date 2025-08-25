@@ -172,7 +172,7 @@ public class Mininic {
                 }
 
                 case UNKNOWN: {
-                    if (!input.trim().isEmpty() && input != null) {
+                    if (!input.trim().isEmpty()) {
                         ui.showUnknownCommand();
                     } else {
                         ui.showError("Input is empty...");
