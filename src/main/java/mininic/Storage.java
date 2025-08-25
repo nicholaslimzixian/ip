@@ -20,7 +20,9 @@ public class Storage {
         List<Task> tasks = new ArrayList<>();
         try {
             if (!Files.exists(file)) {
-                if (file.getParent() != null) Files.createDirectories(file.getParent());
+                if (file.getParent() != null) {
+                    Files.createDirectories(file.getParent());
+                }
                 Files.createFile(file);
                 return tasks;
             }
