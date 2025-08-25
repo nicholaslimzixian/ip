@@ -7,6 +7,10 @@ public abstract class Task {
     protected final String name;
     protected boolean isDone;
 
+    /**
+     * Creates a new Task instance.
+     * @param name
+     */
     public Task(String name) {
         this.name = name;
         this.isDone = false;
@@ -26,6 +30,11 @@ public abstract class Task {
 
     public abstract String toStorageString();
 
+    /**
+     * Creates a Task object from a storage string.
+     * @param s
+     * @return A Task object or null if the string is invalid.
+     */
     public static Task fromStorageString(String s) {
         if (s == null || s.isBlank()) {
             return null;

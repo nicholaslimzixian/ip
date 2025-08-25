@@ -11,6 +11,12 @@ public class Event extends Task {
     private final LocalDateTime fromDt, toDt;
     private final LocalDate fromD, toD;
 
+    /**
+     * Creates a new Event task with time.
+     * @param name
+     * @param from
+     * @param to
+     */
     public Event(String name, LocalDateTime from, LocalDateTime to) {
         super(name);
         this.fromDt = from;
@@ -19,6 +25,12 @@ public class Event extends Task {
         this.toD = null;
     }
 
+    /**
+     * Creates a new Event task without time.
+     * @param name
+     * @param from
+     * @param to
+     */
     public Event(String name, LocalDate from, LocalDate to) {
         super(name);
         this.fromDt = null;

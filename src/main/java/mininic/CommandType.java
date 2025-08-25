@@ -3,6 +3,9 @@ package mininic;
 public enum CommandType {
     BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, UNKNOWN;
 
+    /**
+     * Returns the CommandType corresponding to the given input string.
+     */
     public static CommandType of(String input) {
         switch (input) {
             case "bye": return BYE;

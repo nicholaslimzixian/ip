@@ -5,6 +5,10 @@ import java.util.List;
 public class Ui {
     private static final String LINE = "____________________________________________________________";
 
+    /**
+     * Prints a box around the given lines.
+     * @param lines
+     */
     public static void box(String... lines) {
         System.out.println(LINE);
         for (String line : lines) {
@@ -25,6 +29,11 @@ public class Ui {
         box(tasks.toArray(new String[0]));
     }
 
+    /**
+     * Shows a message when a task is added.
+     * @param t The task that was added.
+     * @param size The current size of the task list.
+     */
     public void showAdded(Task t, int size) {
         box("Added a new task:",
             " " + t.toString(),
@@ -35,11 +44,20 @@ public class Ui {
         box("One task down, many more to go...:", " " + t.toString());
     }
 
+    /**
+     * Shows a message when a task is unmarked.
+     * @param t The task that was unmarked.
+     */
     public void showUnmarked(Task t) {
         box("Why did you even mark this task in the first place?:",
             " " + t.toString());
     }
 
+    /**
+     * Shows a message when a task is deleted.
+     * @param t The task that was deleted.
+     * @param size The current size of the task list.
+     */
     public void showDeleted(Task t, int size) {
         box("This task has been removed:", " " + t.toString(),
             "There are " + size + " tasks in total.");
@@ -49,6 +67,9 @@ public class Ui {
         box(message);
     }
 
+    /**
+     * Shows a message when an unknown command is entered.
+     */
     public void showUnknownCommand() {
         box(
 "Enter a valid command!. Try:",

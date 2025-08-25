@@ -4,10 +4,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
-    private final LocalDate byDate;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy");
+    private final LocalDate byDate;
 
 
+    /**
+     * Creates a new Deadline task.
+     * @param name
+     * @param byDate
+     */
     public Deadline(String name, LocalDate byDate) {
         super(name);
         this.byDate = byDate;
