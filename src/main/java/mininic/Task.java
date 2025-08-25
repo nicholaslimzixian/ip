@@ -87,6 +87,11 @@ public abstract class Task {
             return null;
         }
     }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "[" + getStatus() + "] " + name;

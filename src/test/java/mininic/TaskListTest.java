@@ -1,12 +1,13 @@
 package mininic;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -14,8 +15,14 @@ public class TaskListTest {
 
     @TempDir Path tempDir;
 
+    private TaskList newTaskList() {
+        Path file = tempDir.resolve("tasks.txt");
+        Storage storage = new Storage(file.toString());
+        return new TaskList(new ArrayList<Task>(), storage);
+    }
+
     @Test
-    void of_delete_removesCorrectTask_andShrinksList_andPersists() throws IOException {
+    void removeTask() throws IOException {
         Path data = tempDir.resolve("tasks.txt");
         Storage storage = new Storage(data.toString());
 

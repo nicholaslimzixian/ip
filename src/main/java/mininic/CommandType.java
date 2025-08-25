@@ -1,7 +1,7 @@
 package mininic;
 
 public enum CommandType {
-    BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, UNKNOWN;
+    BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, UNKNOWN;
 
     /**
      * Returns the CommandType corresponding to the given input string.
@@ -16,6 +16,7 @@ public enum CommandType {
         case "deadline": return DEADLINE;
         case "event": return EVENT;
         case "delete": return DELETE;
+        case "find": return FIND;
         default: return UNKNOWN;
         }
     }

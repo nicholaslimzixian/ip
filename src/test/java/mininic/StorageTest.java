@@ -17,7 +17,7 @@ public class StorageTest {
     @TempDir Path tmp;
 
     @Test
-    void of_load_onMissingFile_returnsEmptyList() throws IOException {
+    void loadMissingFile() throws IOException {
         Path p = tmp.resolve("data").resolve("tasks.txt"); // non-existent yet
         Storage s = new Storage(p.toString());
         List<Task> tasks = s.load(); // expect no throw
@@ -26,7 +26,7 @@ public class StorageTest {
     }
 
     @Test
-    void of_save_then_load_roundTripsTasks() throws IOException {
+    void saveAndLoad() throws IOException {
         Path p = tmp.resolve("data").resolve("tasks.txt");
         Storage s = new Storage(p.toString());
         List<Task> toSave = new ArrayList<>();
