@@ -33,7 +33,6 @@ public class Mininic {
         } catch (NumberFormatException e) {
             throw new InvalidCommandException(message);
         }
-        
     }
 
     private static String requireNonEmpty(String s, String message) {
@@ -54,105 +53,110 @@ public class Mininic {
 
             try {
                 switch (command.type) {
-                    case BYE:
-                        ui.byeMessage();
-                        sc.close();
-                        return;
+                case BYE:
+                    ui.byeMessage();
+                    sc.close();
+                    return;
 
-                    case LIST: {
-                        ui.showTaskList(taskList.asLines());
-                        break;
+                case LIST: {
+                    ui.showTaskList(taskList.asLines());
+                    break;
+                }
+
+                case MARK: {
+                    int idx = parseIndex(input.substring(4), taskList.size());
+                    Task t = taskList.mark(idx);
+                    ui.showMarked(t);
+                    break;
+                }
+
+                case UNMARK: {
+                    int idx = parseIndex(input.substring(6), taskList.size());
+                    Task t = taskList.unmark(idx);
+                    ui.showUnmarked(t);
+                    break;
+                }
+
+                case TODO: {
+                    String name = requireNonEmpty(arg, "Usage: todo <description>");
+                    Task t = taskList.add(new Todo(name));
+                    ui.showAdded(t, taskList.size());
+                    break;
+                }
+
+                case DEADLINE: {
+                    String usage = "Usage: deadline <description> /by yyyy-mm-dd";
+                    String taskBy = requireNonEmpty(arg, usage);
+                    int byIdx = taskBy.indexOf("/by");
+                    if (byIdx < 0) {
+                        throw new InvalidCommandException(usage);
                     }
+                    String name = requireNonEmpty(taskBy.substring(0, byIdx), usage);
+                    String by = requireNonEmpty(taskBy.substring(byIdx + 3), usage);
 
-                    case MARK: {
-                        int idx = parseIndex(input.substring(4), taskList.size());
-                        Task t = taskList.mark(idx);
-                        ui.showMarked(t);
-                        break;
+                    LocalDate byDate;
+                    try {
+                        byDate = LocalDate.parse(by);
+                    } catch (DateTimeParseException e) {
+                        throw new InvalidCommandException("Please enter the date in the format of yyyy-mm-dd");
                     }
+                    Task t = taskList.add(new Deadline(name, byDate));
+                    ui.showAdded(t, taskList.size());
+                    break;
+                }
 
-                    case UNMARK: {
-                        int idx = parseIndex(input.substring(6), taskList.size());
-                        Task t = taskList.unmark(idx);
-                        ui.showUnmarked(t);
-                        break;
+                case EVENT: {
+                    String usage = "Usage: event <description> /from yyyy-mm-dd HHmm /to yyyy-mm-dd HHmm";
+                    String taskFromTo = requireNonEmpty(arg, usage);
+                    int fromIdx = taskFromTo.indexOf("/from");
+                    int toIdx = taskFromTo.indexOf("/to");
+                    if (fromIdx < 0 || toIdx < 0 || toIdx < fromIdx) {
+                        throw new InvalidCommandException(usage);
                     }
+                    String name = requireNonEmpty(taskFromTo.substring(0, fromIdx), usage);
+                    String from = requireNonEmpty(taskFromTo.substring(fromIdx + 5, toIdx), usage);
+                    String to = requireNonEmpty(taskFromTo.substring(toIdx + 3), usage);
 
-                    case TODO: {
-                        String name = requireNonEmpty(arg, "Usage: todo <description>");
-                        Task t = taskList.add(new Todo(name));
-                        ui.showAdded(t, taskList.size());
-                        break;
-                    }
+                    Task t;
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
-                    case DEADLINE: {
-                        String usage = "Usage: deadline <description> /by yyyy-mm-dd";
-                        String taskBy = requireNonEmpty(arg, usage);
-                        int byIdx = taskBy.indexOf("/by");
-                        if (byIdx < 0) {
-                            throw new InvalidCommandException(usage);
-                        }
-                        String name = requireNonEmpty(taskBy.substring(0, byIdx), usage);
-                        String by = requireNonEmpty(taskBy.substring(byIdx + 3), usage);
-
-                        LocalDate byDate;
+                    try {
+                        LocalDateTime fromDt = LocalDateTime.parse(from, dtf);
+                        LocalDateTime toDt = LocalDateTime.parse(to, dtf);
+                        t = taskList.add(new Event(name, fromDt, toDt));
+                    } catch (DateTimeParseException dtFailure) {
                         try {
-                            byDate = LocalDate.parse(by);
+                            LocalDate fromD = LocalDate.parse(from);
+                            LocalDate toD = LocalDate.parse(to);
+                            t = taskList.add(new Event(name, fromD, toD));
                         } catch (DateTimeParseException e) {
-                            throw new InvalidCommandException("Please enter the date in the format of yyyy-mm-dd");
-                        }
-                        Task t = taskList.add(new Deadline(name, byDate));
-                        ui.showAdded(t, taskList.size());
-                        break;
-                    }
-
-                    case EVENT: {
-                        String usage = "Usage: event <description> /from yyyy-mm-dd HHmm /to yyyy-mm-dd HHmm";
-                        String taskFromTo = requireNonEmpty(arg, usage);
-                        int fromIdx = taskFromTo.indexOf("/from");
-                        int toIdx   = taskFromTo.indexOf("/to");
-                        if (fromIdx < 0 || toIdx < 0 || toIdx < fromIdx) {
-                            throw new InvalidCommandException(usage);
-                        }
-                        String name = requireNonEmpty(taskFromTo.substring(0, fromIdx), usage);
-                        String from = requireNonEmpty(taskFromTo.substring(fromIdx + 5, toIdx), usage);
-                        String to = requireNonEmpty(taskFromTo.substring(toIdx + 3), usage);
-
-                        Task t;
-                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-
-                        try {
-                            LocalDateTime fromDt = LocalDateTime.parse(from, dtf);
-                            LocalDateTime toDt = LocalDateTime.parse(to, dtf);
-                            t = taskList.add(new Event(name, fromDt, toDt));
-                        } catch (DateTimeParseException dtFailure) {
-                            try {
-                                LocalDate fromD = LocalDate.parse(from);
-                                LocalDate toD = LocalDate.parse(to);
-                                t = taskList.add(new Event(name, fromD, toD));
-                            } catch (DateTimeParseException e) {
-                                throw new InvalidCommandException("Please enter the date in the format of yyyy-mm-dd or yyyy-mm-dd HHmm");
-                            }
-                        }
-                        ui.showAdded(t, taskList.size());
-                        break;
-                    }
-
-                    case DELETE: {
-                        int idx = parseIndex(input.substring(6), taskList.size());
-                        Task t = taskList.delete(idx);
-                        ui.showDeleted(t, taskList.size());
-                        break;
-                    }
-
-                    case UNKNOWN: {
-                        if (!input.trim().isEmpty() && input != null) {
-                            ui.showUnknownCommand();
-                        } else {
-                            ui.showError("Input is empty...");
+                            throw new InvalidCommandException(
+                                "Please enter the date in the format of yyyy-mm-dd or yyyy-mm-dd HHmm");
                         }
                     }
-                } 
+                    ui.showAdded(t, taskList.size());
+                    break;
+                }
+
+                case DELETE: {
+                    int idx = parseIndex(input.substring(6), taskList.size());
+                    Task t = taskList.delete(idx);
+                    ui.showDeleted(t, taskList.size());
+                    break;
+                }
+
+                case UNKNOWN: {
+                    if (!input.trim().isEmpty() && input != null) {
+                        ui.showUnknownCommand();
+                    } else {
+                        ui.showError("Input is empty...");
+                    }
+                    break;
+                }
+                default: {
+                    //should not reach default
+                }
+                }
             } catch (EmptyDescriptionException | InvalidCommandException | UnknownCommandException e) {
                 ui.showError(e.getMessage());
             } catch (java.io.IOException e) {
@@ -164,5 +168,3 @@ public class Mininic {
         new Mininic("data/tasks.txt").run();
     }
 }
-
-    

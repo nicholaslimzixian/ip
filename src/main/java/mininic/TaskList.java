@@ -17,8 +17,8 @@ public class TaskList {
         this.storage = storage;
     }
 
-    public int size() { 
-        return tasks.size(); 
+    public int size() {
+        return tasks.size();
     }
 
     public List<String> asLines() {

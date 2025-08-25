@@ -50,15 +50,14 @@ public class Ui {
     }
 
     public void showUnknownCommand() {
-        box(
-"Enter a valid command!. Try:",
-          "1. todo <desc>",
-          "2. deadline <desc> /by yyyy-mm-dd",
-          "3. event <desc> /from yyyy-mm-dd HHmm /to yyyy-mm-dd HHmm",
-          "4. list",
-          "5. mark <N>, unmark <N>",
-          "6. delete <N>",
-          "7. bye"
-          );
+        box("Enter a valid command!. Try:",
+            "1. todo <desc>",
+            "2. deadline <desc> /by yyyy-mm-dd",
+            "3. event <desc> /from yyyy-mm-dd HHmm /to yyyy-mm-dd HHmm",
+            "4. list",
+            "5. mark <N>, unmark <N>",
+            "6. delete <N>",
+            "7. bye"
+        );
     }
 }

@@ -8,14 +8,16 @@ public class Event extends Task {
     private static final DateTimeFormatter FORMATTER_DT = DateTimeFormatter.ofPattern("MMM d yyyy h:mma");
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MMM d yyyy");
 
-    private final LocalDateTime fromDt, toDt;
-    private final LocalDate fromD, toD;
+    private final LocalDateTime fromDt;
+    private final LocalDateTime toDt;
+    private final LocalDate fromD;
+    private final LocalDate toD;
 
     public Event(String name, LocalDateTime from, LocalDateTime to) {
         super(name);
         this.fromDt = from;
         this.toDt = to;
-        this.fromD = null; 
+        this.fromD = null;
         this.toD = null;
     }
 
@@ -28,7 +30,8 @@ public class Event extends Task {
     }
 
     @Override public String toStorageString() {
-        String from, to;
+        String from;
+        String to;
         if (fromD != null && toD != null) {
             from = fromD.toString();
             to = toD.toString();
@@ -36,7 +39,6 @@ public class Event extends Task {
             from = fromDt.toString();
             to = toDt.toString();
         }
-    
         return "E | " + (isDone ? "1" : "0") + " | " + name + " | " + from + " | " + to;
     }
 
@@ -48,7 +50,6 @@ public class Event extends Task {
         } else {
             time = "(from: " + fromDt.format(FORMATTER_DT) + " to: " + toDt.format(FORMATTER_DT) + ")";
         }
-        
         return "[E]" + super.toString() + " " + time;
     }
 }
