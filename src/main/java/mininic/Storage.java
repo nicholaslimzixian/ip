@@ -16,6 +16,10 @@ public class Storage {
         this.file = Path.of(relativePath);
     }
 
+    /**
+     * Loads the tasks from the storage file.
+     * @return A list of tasks loaded from the storage file.
+     */
     public List<Task> load() {
         List<Task> tasks = new ArrayList<>();
         try {
@@ -41,6 +45,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the tasks to the storage file.
+     * @param tasks
+     * @throws IOException
+     */
     public void save(List<Task> tasks) throws IOException {
         if (file.getParent() != null && !Files.exists(file.getParent())) {
             Files.createDirectories(file.getParent());

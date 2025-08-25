@@ -12,6 +12,10 @@ public class Mininic {
     private final Storage storage;
     private final TaskList taskList;
 
+    /**
+     * Creates a new Mininic instance.
+     * @param filePath
+     */
     public Mininic(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -42,6 +46,9 @@ public class Mininic {
         return s.trim();
     }
 
+    /**
+     * Starts the Mininic application.
+     */
     public void run() {
         ui.welcomeMessage();
 

@@ -8,6 +8,11 @@ public class Deadline extends Task {
     private final LocalDate byDate;
 
 
+    /**
+     * Creates a new Deadline task.
+     * @param name
+     * @param byDate
+     */
     public Deadline(String name, LocalDate byDate) {
         super(name);
         this.byDate = byDate;
