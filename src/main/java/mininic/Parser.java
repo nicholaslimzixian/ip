@@ -1,5 +1,8 @@
 package mininic;
 
+/**
+ * Parses user input into commands.
+ */
 public class Parser {
     public static class ParsedCommand {
         public final CommandType type;

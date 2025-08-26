@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests the Event class.
+ */
 public class EventTest {
 
     @Test

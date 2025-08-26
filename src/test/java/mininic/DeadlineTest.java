@@ -6,6 +6,9 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests the Deadline class.
+ */
 public class DeadlineTest {
 
     @Test

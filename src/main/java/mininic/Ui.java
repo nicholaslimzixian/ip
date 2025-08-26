@@ -2,6 +2,9 @@ package mininic;
 
 import java.util.List;
 
+/**
+ * Handles user interactions and displays information to the user.
+ */
 public class Ui {
     private static final String LINE = "____________________________________________________________";
 

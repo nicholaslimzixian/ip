@@ -3,6 +3,9 @@ package mininic;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Represents a task.
+ */
 public abstract class Task {
     protected final String name;
     protected boolean isDone;

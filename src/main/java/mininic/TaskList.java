@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a list of tasks.
+ */
 public class TaskList {
     private final List<Task> tasks;
     private final Storage storage;

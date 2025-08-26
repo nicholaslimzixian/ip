@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+/**
+ * Tests the TaskList class.
+ */
 public class TaskListTest {
 
     @TempDir Path tempDir;
