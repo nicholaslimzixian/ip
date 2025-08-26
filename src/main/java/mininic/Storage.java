@@ -9,6 +9,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles storage of tasks in the file system.
+ */
 public class Storage {
     private final Path file;
 

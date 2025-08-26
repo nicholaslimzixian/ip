@@ -12,7 +12,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-
+/**
+ * Tests the find functionality of the TaskList class.
+ */
 public class FindTest {
 
     @TempDir Path tempDir;

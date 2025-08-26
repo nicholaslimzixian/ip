@@ -13,6 +13,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+/**
+ * Tests the Storage class.
+ */
 public class StorageTest {
 
     @TempDir Path tmp;

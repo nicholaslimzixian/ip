@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+/**
+ * Main entry point for the Mininic application.
+ */
 public class Mininic {
 
     private final Ui ui;

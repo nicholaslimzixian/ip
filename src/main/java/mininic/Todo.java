@@ -1,5 +1,8 @@
 package mininic;
 
+/**
+ * Represents a todo task.
+ */
 public class Todo extends Task {
     public Todo(String name) {
         super(name);
