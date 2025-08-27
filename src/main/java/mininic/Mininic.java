@@ -49,11 +49,11 @@ public class Mininic {
         return s.trim();
     }
 
-    public String getResponse(String input) {
-        return "Mininic heard: " + input;
-    }
-
     /**
+     * Generates a response based on user input for GUI.
+     * @param input
+     * @return String response
+     */
     public String getResponse(String input) {
         Parser.ParsedCommand command = Parser.parse(input);
         String arg = command.arg;
@@ -61,8 +61,8 @@ public class Mininic {
         try {
             switch (command.type) {
             case BYE:
-                return "Bye... :'(";
-
+                System.exit(0);
+                break;
             case LIST: {
                 return String.join("\n", taskList.asLines());
             }
@@ -162,13 +162,14 @@ public class Mininic {
                     for (int i = 0; i < hits.size(); i++) {
                         lines.add((i + 1) + ". " + hits.get(i).toString());
                     }
-                    return String.join("/n", lines);
+                    return String.join(System.lineSeparator(), lines);
                 }
             }
 
             case UNKNOWN: {
                 if (!input.trim().isEmpty()) {
                     return """
+                           Hello! I am Mininic, your personal task manager.
                            Enter a valid command!. Try:
                            1. todo <desc>
                            2. deadline <desc> /by yyyy-mm-dd
@@ -187,13 +188,12 @@ public class Mininic {
             }
             }
         } catch (EmptyDescriptionException | InvalidCommandException | UnknownCommandException e) {
-            ui.showError(e.getMessage());
+            return e.getMessage();
         } catch (java.io.IOException e) {
-            ui.showError("Please try again. An error occurred while saving: " + e.getMessage());
+            return "Please try again. An error occurred while saving: " + e.getMessage();
         }
         return "";
     }
-    */
 
     /**
      * Starts the Mininic CLI application.

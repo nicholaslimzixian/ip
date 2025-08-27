@@ -24,6 +24,7 @@ public class MininicApp extends Application {
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setMininic(mininic);
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
