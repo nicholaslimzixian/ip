@@ -10,6 +10,7 @@ public class Ui {
 
     /**
      * Prints a box around the given lines.
+     * Added this line for A-Varargs :)
      * @param lines
      */
     public static void box(String... lines) {
