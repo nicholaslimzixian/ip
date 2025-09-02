@@ -24,6 +24,9 @@ public class Event extends Task {
      */
     public Event(String name, LocalDateTime from, LocalDateTime to) {
         super(name);
+        assert name != null && !name.isBlank() : "Task name is blank!";
+        assert from != null && to != null : "Event dates are null!";
+        assert !from.isAfter(to) : "Event start date is after end date!";
         this.fromDt = from;
         this.toDt = to;
         this.fromD = null;
@@ -38,6 +41,9 @@ public class Event extends Task {
      */
     public Event(String name, LocalDate from, LocalDate to) {
         super(name);
+        assert name != null && !name.isBlank() : "Task name is blank!";
+        assert from != null && to != null : "Event dates are null!";
+        assert !from.isAfter(to) : "Event start date is after end date!";
         this.fromDt = null;
         this.toDt = null;
         this.fromD = from;

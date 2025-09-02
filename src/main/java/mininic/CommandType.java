@@ -10,6 +10,7 @@ public enum CommandType {
      * Returns the CommandType corresponding to the given input string.
      */
     public static CommandType of(String input) {
+        assert (input != null) : "Input should not be null";
         switch (input) {
         case "bye": return BYE;
         case "list": return LIST;
