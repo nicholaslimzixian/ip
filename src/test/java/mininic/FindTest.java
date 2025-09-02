@@ -35,7 +35,7 @@ public class FindTest {
         List<Task> hits = tl.find("book");
         assertEquals(2, hits.size());
         assertTrue(hits.get(0).toString().contains("read book"));
-        assertTrue(hits.get(1).toString().toLowerCase().contains("return book to library"));
+        assertTrue(hits.get(1).toString().contains("Return BOOK to library"));
     }
 
     @Test

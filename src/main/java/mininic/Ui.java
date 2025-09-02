@@ -22,11 +22,11 @@ public class Ui {
     }
 
     public void welcomeMessage() {
-        box("Hello! I'm Mininic", "Your wish is my command!");
+        box(Message.GREETING);
     }
 
     public void byeMessage() {
-        box("Bye... :'(");
+        box(Message.BYE);
     }
 
     public void showTaskList(List<String> tasks) {
@@ -44,6 +44,10 @@ public class Ui {
             "There are " + size + " tasks in total.");
     }
 
+    /**
+     * Shows a message to indicate that a task has been marked.
+     * @param t The task that was marked.
+     */
     public void showMarked(Task t) {
         box("One task down, many more to go...:", " " + t.toString());
     }
@@ -82,7 +86,8 @@ public class Ui {
             "4. list",
             "5. mark <N>, unmark <N>",
             "6. delete <N>",
-            "7. bye"
+            "7. find <keyword>",
+            "8. bye"
         );
     }
 }
