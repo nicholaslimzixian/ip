@@ -26,8 +26,12 @@ public final class Message {
         "5. mark <N>, unmark <N>",
         "6. delete <N>",
         "7. find <keyword>",
-        "8. bye"
+        "8. routine <description> /every <day> /at <time>",
+        "9. bye"
     );
+    public static final String INVALID_TASK_NUMBER = "The task number is invalid!";
+    public static final String ROUTINE_HELP = "Usage: routine <description> /every <day> /at <time>";
+    public static final String INVALID_ROUTINE = "Enter a valid day (e.g., MONDAY, etc.) and time (e.g., 1408).";
 
     /**
      * Returns a message to indicate that a task has been added.
