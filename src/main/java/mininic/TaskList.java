@@ -48,6 +48,7 @@ public class TaskList {
      * @throws IOException
      */
     public Task add(Task t) throws IOException {
+        assert t != null : "Task should not be null";
         tasks.add(t);
         storage.save(tasks);
         return t;
@@ -60,6 +61,7 @@ public class TaskList {
      * @throws IOException
      */
     public Task mark(int idx) throws IOException {
+        assert idx >= 0 && idx < tasks.size() : "Index out of bounds";
         Task t = tasks.get(idx);
         t.mark();
         storage.save(tasks);
@@ -73,6 +75,7 @@ public class TaskList {
      * @throws IOException
      */
     public Task unmark(int idx) throws IOException {
+        assert idx >= 0 && idx < tasks.size() : "Index out of bounds";
         Task t = tasks.get(idx);
         t.unmark();
         storage.save(tasks);
@@ -86,6 +89,7 @@ public class TaskList {
      * @throws IOException
      */
     public Task delete(int idx) throws IOException {
+        assert idx >= 0 && idx < tasks.size() : "Index out of bounds";
         Task t = tasks.remove(idx);
         storage.save(tasks);
         return t;

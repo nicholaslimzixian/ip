@@ -45,6 +45,7 @@ public class Storage {
         } catch (IOException ignored) {
             //ignore read errors and return an empty list
         }
+        assert tasks != null : "Loaded list must not be null";
         return tasks;
     }
 

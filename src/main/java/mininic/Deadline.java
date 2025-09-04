@@ -18,9 +18,14 @@ public class Deadline extends Task {
      */
     public Deadline(String name, LocalDate byDate) {
         super(name);
+        assert name != null && !name.isBlank() : "Task name is blank!";
+        assert byDate != null : "By date is null!";
         this.byDate = byDate;
     }
 
+    /**
+     * Converts the task to a format suitable for storage.
+     */
     @Override public String toStorageString() {
         String by = byDate.toString();
         return "D | " + (isDone ? "1" : "0") + " | " + name + " | " + by;

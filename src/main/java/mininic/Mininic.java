@@ -1,7 +1,9 @@
 package mininic;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
@@ -26,19 +28,18 @@ public class Mininic {
     }
 
     private static int parseIndex(String input, int size) {
-        String message = "The task number is invalid!";
         try {
             int n = Integer.parseInt(input.trim());
             if (n <= 0) {
-                throw new InvalidCommandException(message);
+                throw new InvalidCommandException(Message.INVALID_TASK_NUMBER);
             }
             int idx = n - 1;
             if (idx >= size) {
-                throw new InvalidCommandException(message);
+                throw new InvalidCommandException(Message.INVALID_TASK_NUMBER);
             }
             return idx;
         } catch (NumberFormatException e) {
-            throw new InvalidCommandException(message);
+            throw new InvalidCommandException(Message.INVALID_TASK_NUMBER);
         }
     }
 
@@ -155,6 +156,30 @@ public class Mininic {
                     }
                     return String.join(System.lineSeparator(), lines);
                 }
+            }
+
+            case ROUTINE: {
+                String taskDayTime = requireNonEmpty(arg, Message.ROUTINE_HELP);
+                int everyIdx = taskDayTime.indexOf("/every");
+                int atIdx = taskDayTime.indexOf("/at");
+                if (everyIdx < 0 || atIdx < 0 || atIdx < everyIdx) {
+                    throw new InvalidCommandException(Message.ROUTINE_HELP);
+                }
+                String name = requireNonEmpty(taskDayTime.substring(0, everyIdx), Message.ROUTINE_HELP);
+                String day = requireNonEmpty(taskDayTime.substring(everyIdx + 6, atIdx), Message.ROUTINE_HELP);
+                String time = requireNonEmpty(taskDayTime.substring(atIdx + 3), Message.ROUTINE_HELP);
+
+                Task t;
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HHmm");
+
+                try {
+                    DayOfWeek dayOfWeek = DayOfWeek.valueOf(day.toUpperCase());
+                    LocalTime localTime = LocalTime.parse(time, dtf);
+                    t = taskList.add(new Routine(name, dayOfWeek, localTime));
+                } catch (DateTimeParseException | IllegalArgumentException dtFailure) {
+                    throw new InvalidCommandException(Message.INVALID_ROUTINE);
+                }
+                return Message.showAdded(t, taskList.size());
             }
 
             case UNKNOWN: {

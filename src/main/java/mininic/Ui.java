@@ -87,7 +87,8 @@ public class Ui {
             "5. mark <N>, unmark <N>",
             "6. delete <N>",
             "7. find <keyword>",
-            "8. bye"
+            "8. routine <description> /every <day> /at <time>",
+            "9. bye"
         );
     }
 }

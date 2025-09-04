@@ -1,7 +1,9 @@
 package mininic;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Represents a task.
@@ -85,6 +87,16 @@ public abstract class Task {
                 e.mark();
             }
             return e;
+        }
+        case "R": {
+            String day = parts[3];
+            String time = parts[4];
+            Routine r;
+            r = new Routine(desc, DayOfWeek.valueOf(day.toUpperCase()), LocalTime.parse(time));
+            if (done) {
+                r.mark();
+            }
+            return r;
         }
         default:
             return null;
