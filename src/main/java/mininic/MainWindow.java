@@ -51,4 +51,15 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
     }
+
+
+    /**
+     * Greets the user with a message.
+     * @param greeting
+     */
+    public void greet(String greeting) {
+        dialogContainer.getChildren().add(
+                DialogBox.getMininicDialog(greeting, mininicImage)
+        );
+    }
 }
