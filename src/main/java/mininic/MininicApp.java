@@ -27,8 +27,9 @@ public class MininicApp extends Application {
             stage.setScene(scene);
 
             fxmlLoader.<MainWindow>getController().setMininic(mininic);
+            stage.setMaximized(true);
             stage.show();
-            
+
             // Used AI to generate the code for this greeting message
             Platform.runLater(() -> {
                 fxmlLoader.<MainWindow>getController().greet("Mininic at your service! How can I help you today?");

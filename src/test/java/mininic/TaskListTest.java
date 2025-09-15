@@ -18,12 +18,6 @@ public class TaskListTest {
 
     @TempDir Path tempDir;
 
-    private TaskList newTaskList() {
-        Path file = tempDir.resolve("tasks.txt");
-        Storage storage = new Storage(file.toString());
-        return new TaskList(new ArrayList<Task>(), storage);
-    }
-
     @Test
     void removeTask() throws IOException {
         Path data = tempDir.resolve("tasks.txt");

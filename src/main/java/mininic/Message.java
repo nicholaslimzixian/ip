@@ -26,7 +26,7 @@ public final class Message {
         "5. mark <N>, unmark <N>",
         "6. delete <N>",
         "7. find <keyword>",
-        "8. routine <description> /every <day> /at <time>",
+        "8. routine <desc> /every <day> /at <time>",
         "9. bye"
     );
     public static final String INVALID_TASK_NUMBER = "The task number is invalid!";
