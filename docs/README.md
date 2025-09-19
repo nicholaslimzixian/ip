@@ -99,16 +99,3 @@ Mininic remembers the tasks you've added/edited/removed previously. There is no 
 
 ## Editing Data
 The data file Mininic uses can be found at `[JAR FILE LOCATION]/data/tasks.txt`. Users are welcomed to update data directly by editing that data file.
-
-## Command Summary
-| Action | Format | Examples
-| :----- | :--------: | ----: |
-|todo task|todo \<description>|`todo CS2103T Quiz`|
-|deadline task|deadline \<description> \/by \<time>|`deadline CS2103T iP Project /by 2025-10-30`|
-|event task|event \<description> \/from \<start> \/to \<end>|`event CS2103T Opening Ceremony /from 2025-10-30 0900 /to 2025-10-30 1700`, `event CS2103T Closing Ceremony /from 2025-10-31 /to 2025-10-31` |
-|routine task|routine \<description> \/every \<day> \/at \<time>|`routine Watch CS2103T Briefing /every Friday /at 1600`|
-|list tasks|list|`list`|
-|mark/unmark task|mark/unmark \<N>|`mark 1`, `unmark 2`|
-|delete task|delete \<N>|`delete 1`|
-|find tasks|find \<keyword>|`find CS2103T`|
-|exit|bye|`bye`|
